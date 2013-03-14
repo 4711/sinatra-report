@@ -1,23 +1,37 @@
 require 'mysql2'
 require 'active_record'
 require 'sinatra'
+require 'csv'
+require 'json'
+require 'xmlsimple'
+require 'sinatra/respond_to'
 
-@@mysqlclient = Mysql2::Client.new(:host => "192.168.139.129", :username => "root", :database => "time_collect")
+Sinatra::Application.register Sinatra::RespondTo
 
 get '/' do
     "Hello world, it's #{Time.now} at the server!"
 end
 
 get '/report' do
-    MyAPI.get_report()
+    format_response MyAPI.get_report()
+end
+
+def format_response(data)
+    respond_to do |format|
+        format.html { data.to_s }
+        format.txt  { data.to_s }
+        format.csv  { data.to_csv }
+        format.xml  { data.to_xml }
+        format.json { data.to_json }
+    end
 end
 
 class MyAPI < ActiveRecord::Base
     class << self
 
         dbconfig = {
-            :adapter => "mysql2",
-            :host => "192.168.139.129",
+            :adapter  => "mysql2",
+            :host     => "192.168.139.129",
             :username => "root",
             :password => "",
             :database => "time_collect"
@@ -39,7 +53,7 @@ class MyAPI < ActiveRecord::Base
                           and jt.Date < '#{first_of_month}'
                         group by cc.CostCentreID, cc.description, '#{month}' }
 
-            self.connection.select_all(query).to_s
+            self.connection.select_all(query)
 
         end
     end
