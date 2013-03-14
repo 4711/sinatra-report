@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
+gem 'mysql2'
+gem 'activerecord'
 gem 'sinatra'
 gem 'slim'
-gem 'mysql2'
 
