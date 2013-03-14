@@ -12,8 +12,8 @@ get '/' do
     "Hello world, it's #{Time.now} at the server!"
 end
 
-get '/report' do
-    format_response MyAPI.get_report()
+get '/report/?:year?/?:month?' do
+    format_response MyAPI.get_report(params)
 end
 
 def format_response(data)
@@ -39,19 +39,23 @@ class MyAPI < ActiveRecord::Base
 
         ActiveRecord::Base.establish_connection(dbconfig)
 
-        def get_report()
+        def get_report(params)
 
             kst = "6553, 6555, 6557, 6558, 6562, 6560, 6563, 6564, 6565, 6566"
-            first_of_month = "20130301"
-            month = "Feb 2013"
+
+            month = params[:month].nil? ? Date.today.month : params[:month].to_i
+            year = params[:year].nil? ? Date.today.year : params[:year].to_i
+
+            month_field = Date.new(year, month-1, 1).strftime("%B %Y")
+            first_of_month = Date.new(year, month, 1).strftime("%Y%m%d")
 
             query = %Q{ select cc.CostCentreID Kostenstelle, cc.description Beschreibung, 
-                               sum(jt.Costs) 'aufgelaufene Kosten', '#{month}' bis
+                               sum(jt.Costs) 'Kosten', '#{month_field}' Bis 
                         from costcentre cc, jobtime jt
                         where cc.PrimaryKey = jt.FK_CostCentre
                           and cc.CostCentreID in (#{kst})
                           and jt.Date < '#{first_of_month}'
-                        group by cc.CostCentreID, cc.description, '#{month}' }
+                        group by cc.CostCentreID, cc.description, '#{month_field}' }
 
             self.connection.select_all(query)
 
