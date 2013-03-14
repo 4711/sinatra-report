@@ -9,3 +9,8 @@ gem 'to-csv'
 gem 'json'
 gem 'xml-simple'
 
+gem 'prawn'
+gem 'prawn-core'
+
+source "http://gems.github.com"
+gem 'sbfaulkner-sinatra-prawn'
