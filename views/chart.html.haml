@@ -1,0 +1,46 @@
+%script{ :type => "text/javascript", :src =>"//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
+%script{ :type => "text/javascript", :src =>"http://code.highcharts.com/highcharts.js"}
+%script{ :type => "text/javascript", :src =>"http://code.highcharts.com/modules/exporting.js"}
+
+#container(style="min-width: 400px; height: 400px; margin: 0 auto")
+
+:javascript
+  $(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'column'
+            },
+            title: { text: 'Cost' },
+            subtitle: { text: 'Source: TC'},
+            xAxis: { categories: [ '6553', '6555','6557', '6558', '6560', '6562', '6563', '6564', '6565', '6566' ] },
+            yAxis: {  min: 0, title: { text: 'Costs CHF'} },
+            legend: {
+                layout: 'vertical',
+                backgroundColor: '#FFFFFF',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 100,
+                y: 70,
+                floating: true,
+                shadow: true
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.x +': '+ this.y +' CHF';
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{ data: [316561, 2957613, 83331, 190114, 332926, 264152, 213425, 1638, 92517, 290561] }]
+        });
+    });
+  });
+

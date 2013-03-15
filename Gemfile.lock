@@ -17,9 +17,15 @@ GEM
     afm (0.2.0)
     arel (3.0.2)
     builder (3.0.4)
+    haml (4.0.0)
+      tilt
+    hash-deep-merge (0.1.1)
     hashery (2.1.0)
     i18n (0.6.4)
     json (1.7.7)
+    lazy_high_charts (1.4.0)
+      bundler (>= 1.0)
+      hash-deep-merge
     multi_json (1.6.1)
     mysql2 (0.3.11)
     pdf-reader (1.3.2)
@@ -60,7 +66,9 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  haml
   json
+  lazy_high_charts
   mysql2
   prawn
   prawn-core

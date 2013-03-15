@@ -1,0 +1,47 @@
+!!! 5
+%html
+  %head
+    %title Cost Report
+    %link(rel="stylesheet" href="//cdn.jsdelivr.net/normalize/2.1.0/normalize.css")
+    %link(rel="stylesheet" href="css/styles.css")
+  %body
+    #wrapper
+      #header
+        %h1 Cost Report
+        %h2 Cummulated costs of some projects
+      #nav
+        %ol
+          %a(href="/")
+            %li Home
+          %a(href="/report")
+            %li Report
+          %a(href="/chart")
+            %li Chart
+
+
+      #content
+        =yield
+
+      #side_bar
+        %h1 Report Filter
+        %form{:action => "/report", :method => "post"}
+          %legend
+            Select End Date 
+          %p
+            %label{:for => ""} Month 
+            %select{:name => "month"}
+              - for month in 1..12
+                %option= month
+          %p
+            %label{:for => ""} Year
+            %select{:name => "year"}
+              - for year in 2007..2013
+                %option= year
+
+          %p
+            %input{:type => "submit", :value => "Ok"}
+
+      #footer
+        %p
+          (c) 2013 Company
+

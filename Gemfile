@@ -8,6 +8,7 @@ gem 'sinatra-respond_to'
 gem 'to-csv'
 gem 'json'
 gem 'xml-simple'
+gem 'haml'
 
 gem 'prawn'
 gem 'prawn-core'

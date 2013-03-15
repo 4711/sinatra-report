@@ -1,1 +1,15 @@
-<% data %>
+%table
+  %thead
+    %tr
+      %td Kostenstelle
+      %td Beschreibung
+      %td Kosten
+      %td Bis
+
+  %tbody
+    - @costs.each do |c|
+      %tr
+        %td= c['Kostenstelle']
+        %td= c['Beschreibung']
+        %td= c['Kosten']
+        %td= c['Bis']
